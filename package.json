@@ -2,7 +2,7 @@
     "name": "qiniuclient",
     "cnname": "云存储管理客户端",
     "cdnPath": "",
-    "version": "0.4.3",
+    "version": "0.4.5",
     "description": "云存储管理客户端。仿文件夹式管理、图片预览、拖拽上传、文件夹上传、同步、批量导出URL等功能",
     "author": "诗人的咸鱼 <willnewii@163.com>",
     "license": "MIT",
@@ -17,6 +17,7 @@
         "build:linux:deb": "cross-env ENV_DLL=true node .electron-vue/build.js && electron-builder --linux deb",
         "build:linux:rpm": "cross-env ENV_DLL=true node .electron-vue/build.js && electron-builder --linux rpm",
         "build:linux:appimage": "cross-env ENV_DLL=true node .electron-vue/build.js && electron-builder --linux appimage",
+        "build:linux:zip": "cross-env ENV_DLL=true node .electron-vue/build.js && electron-builder --linux zip",
         "build:dir": "cross-env ENV_DLL=true node --max_old_space_size=4096 .electron-vue/build.js && electron-builder --dir",
         "build:only-build-dir": "cross-env ENV_DLL=true electron-builder --dir",
         "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
@@ -43,8 +44,8 @@
         "log4js": "^3.0.6",
         "mime-types": "^2.1.24",
         "multispinner": "^0.2.1",
-        "qingstor-sdk": "^2.2.16",
-        "qiniu": "^7.2.2",
+        "qingstor-sdk": "^3.0.1",
+        "qiniu": "^7.3.0",
         "qs": "^6.8.0",
         "upyun": "^3.3.11",
         "uuid": "^3.3.3",
@@ -74,7 +75,7 @@
         "del": "^5.1.0",
         "devtron": "^1.4.0",
         "electron": "^6.0.7",
-        "electron-builder": "^21.2.0",
+        "electron-builder": "^22.4.1",
         "electron-debug": "^3.0.1",
         "electron-devtools-installer": "^2.2.0",
         "extract-text-webpack-plugin": "^3.0.0",
@@ -133,9 +134,10 @@
             "target": [
                 "deb",
                 "rpm",
-                "AppImage"
+                "AppImage",
+                "zip"
             ],
-            "icon": "./build/icons",
+            "icon": "./build/icons/",
             "category": "Network"
         },
         "nsis": {

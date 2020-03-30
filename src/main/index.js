@@ -57,6 +57,7 @@ function createMainWindow() {
         width: 1000,
         title: pkg.cnname,
         titleBarStyle: 'hidden',
+        icon: path.join(__dirname, '../../build/icons/icon.' + (util.isWin() ? 'ico' : 'png')),
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true
@@ -158,12 +159,16 @@ const registerIPC = function () {
     });
 
     ipcMain.on(Constants.Listener.setBrand, function (event, arg) {
-        console.log(arg);
         trayUtil.setTrayIcon('tray_' + arg.key + '.png');
     });
 
     ipcMain.on(Constants.Listener.darkMode, function (event, arg) {
         event.sender.send(Constants.Listener.darkMode, systemPreferences.isDarkMode());
+    });
+
+    ipcMain.on(Constants.Listener.showMenuBar, function (event, option) {
+        //win1页面会卡死
+        mainWindow.setMenuBarVisibility(option);
     });
 
     //导出URL链接
@@ -316,6 +321,7 @@ const getMenuData = function () {
                     resizable: false,
                     autoHideMenuBar: true,
                     title: '关于',
+                    icon: iconPath,
                     webPreferences: {
                         webSecurity: false,
                         backgroundThrottling: false,
