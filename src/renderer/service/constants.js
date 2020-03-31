@@ -16,6 +16,7 @@ export const PageName = {
     about: 'about',
     bucketPage: 'bucketPage',
     setup: 'setup',
+    netdisk: 'netdisk',
 };
 
 export const URL = {

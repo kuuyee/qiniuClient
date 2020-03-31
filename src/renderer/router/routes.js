@@ -1,4 +1,4 @@
-import * as Constants from './service/constants';
+import * as Constants from '../service/constants';
 
 export default [
     {
@@ -17,6 +17,11 @@ export default [
                 components: require('@/pages/Setup.vue')
             }
         ]
+    },
+    {
+        path: '/' + Constants.PageName.netdisk,
+        name: Constants.PageName.netdisk,
+        components: require('@/pages/netdisk/main.vue')
     },
     {
         path: '/' + Constants.PageName.login,

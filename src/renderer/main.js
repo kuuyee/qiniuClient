@@ -1,32 +1,41 @@
 import Vue from 'vue';
-import * as Constants from './service/constants';
-import Router from 'vue-router';
-import axios from 'axios';
-
+import ViewUI from 'view-design'
+//import * as Constants from './service/constants';
+//import Router from 'vue-router';
+//import axios from 'axios';
+import i18n from '@/locale'
+import { getRequest, postRequest, putRequest, deleteRequest, importRequest, uploadFileRequest } from './libs/axios'
 
 import "@/service/loadComponent";
 import CloudObjectStorage from "@/cos/CloudObjectStorage";
 
 Vue.prototype.$storage = new CloudObjectStorage();
 
+Vue.prototype.getRequest = getRequest;
+Vue.prototype.postRequest = postRequest;
+Vue.prototype.putRequest = putRequest;
+Vue.prototype.deleteRequest = deleteRequest;
+Vue.prototype.importRequest = importRequest;
+Vue.prototype.uploadFileRequest = uploadFileRequest;
 
-Vue.use(Router);
-
-import PasteImageService from "./service/pasteImageService";
-
-const pasteImageService = new PasteImageService();
+//Vue.use(Router);
 
 // Vue.config.debug = false;
 
-import routes from './routes';
+//import routes from './routes';
+import { router } from './router'
 import store from './vuex/store';
 
-const router = new Router({
-    scrollBehavior: () => ({y: 0}),
-    routes
+Vue.use(ViewUI, {
+    i18n: (key, value) => i18n.t(key, value)
 });
 
-router.afterEach((to, from) => {
+/* const router = new Router({
+    scrollBehavior: () => ({y: 0}),
+    routes
+}); */
+
+/* router.afterEach((to, from) => {
     if (to.meta && to.meta.hideTitle) {
         document.getElementById('title') && document.getElementById('title').remove();
     }
@@ -35,7 +44,7 @@ router.afterEach((to, from) => {
     } else {
         pasteImageService.setEnable(true);
     }
-});
+}); */
 
 import * as util from '@/service/util';
 
@@ -53,7 +62,9 @@ Vue.filter('formatFileSize', function (value) {
 });
 
 //拦截器(会影响到青云的请求)
-axios.interceptors.response.use((response) => {
+/* axios.interceptors.response.use((response) => {
+    console.log("拦截");
+    console.log(response);
     if (response.data) {
         return typeof (response.data) === 'object' ? response.data : JSON.parse(response.data);
     }
@@ -63,13 +74,14 @@ axios.interceptors.response.use((response) => {
         router.push({path: '/login'});
     }
     return Promise.reject(error);
-});
+}); */
 
 import App from './App';
 
 new Vue({
     el: '#app',
     router,
+    i18n,
     store,
     render: h => h(App)
 });

@@ -127,11 +127,11 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import * as types from "../vuex/mutation-types";
-import pkg from "../../../package.json";
+import * as types from "../../vuex/mutation-types";
+import pkg from "../../../../package.json";
 import StatusView from "@/components/StatusView";
 
-import { Constants, mixins, EventBus, util } from "../service/index";
+import { Constants, mixins, EventBus, util } from "../../service/index";
 
 export default {
   mixins: [mixins.base, mixins.request],
@@ -217,7 +217,7 @@ export default {
     if (cos) {
       this.selectCOS(cos);
     } else {
-      this.initCOS();
+      //this.initCOS();
     }
   },
   methods: {
@@ -373,7 +373,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../style/params";
+@import "../../style/params";
 
 .layout {
   height: 100%;
@@ -496,7 +496,7 @@ export default {
 }
 </style>
 <style lang="scss">
-@import "../style/params";
+@import "../../style/params";
 
 .navicon_btn {
   & > span {
