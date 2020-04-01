@@ -7,7 +7,6 @@ import * as storagePromise from '../service/storagePromise';
 import qs from 'qs';
 
 // axios初始化配置
-
 axios.defaults.timeout = 15000;   // baseURL将自动加在'url' 前面，除非'url' 是一个绝对 URL。
 axios.defaults.baseURL = 'http://116.196.76.171/gomk';   // 请求超时时长
 axios.defaults.headers.common['X-Custom-Header'] = 'gomk';
@@ -97,9 +96,9 @@ export const downloadRequest = (url, params) => {
   });
 };
 
-export const getRequest = (url, params) => {
+export const getRequest = (url, accessToken, params) => {
   //let accessToken = getStore('accessToken');
-  let accessToken = storagePromise.get('accessToken');
+  //let accessToken = storagePromise.get('accessToken');
   return axios({
     method: 'get',
     url: `${url}`,
@@ -110,9 +109,9 @@ export const getRequest = (url, params) => {
   });
 };
 
-export const postRequest = (url, params) => {
-  //let accessToken = getStore("accessToken");
-  let accessToken = storagePromise.get('accessToken');
+
+
+export const postRequest = (url, accessToken, params) => {
   return axios({
     method: 'post',
     url: `${url}`,
@@ -137,9 +136,8 @@ export const postRequest = (url, params) => {
 };
 
 
-export const putRequest = (url, params) => {
+export const putRequest = (url, accessToken, params) => {
   //let accessToken = getStore("accessToken");
-  let accessToken = storagePromise.get('accessToken');
   return axios({
     method: 'put',
     url: `${url}`,
@@ -159,9 +157,8 @@ export const putRequest = (url, params) => {
   });
 };
 
-export const deleteRequest = (url, params) => {
+export const deleteRequest = (url, accessToken, params) => {
   //let accessToken = getStore('accessToken');
-  let accessToken = storagePromise.get('accessToken');
   return axios({
     method: 'delete',
     url: `${url}`,
@@ -172,9 +169,8 @@ export const deleteRequest = (url, params) => {
   });
 };
 
-export const importRequest = (url, params) => {
+export const importRequest = (url, accessToken, params) => {
   //let accessToken = getStore('accessToken');
-  let accessToken = storagePromise.get('accessToken');
   return axios({
     method: 'post',
     url: `${url}`,
@@ -185,9 +181,8 @@ export const importRequest = (url, params) => {
   });
 };
 
-export const uploadFileRequest = (url, params) => {
+export const uploadFileRequest = (url, accessToken, params) => {
   //let accessToken = getStore('accessToken');
-  let accessToken = storagePromise.get('accessToken');
   return axios({
     method: 'post',
     url: `${url}`,

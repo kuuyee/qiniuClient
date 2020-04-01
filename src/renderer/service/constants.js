@@ -17,6 +17,8 @@ export const PageName = {
     bucketPage: 'bucketPage',
     setup: 'setup',
     netdisk: 'netdisk',
+    netdisk_enterprise:"netdisk-enterprise",
+    netdisk_personal:"netdisk-personal",
 };
 
 export const URL = {

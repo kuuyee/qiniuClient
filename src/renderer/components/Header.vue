@@ -155,6 +155,7 @@
             });
         },
         mounted() {
+            console.log("Header come in");
             if (this.$storage.key === brand.upyun.key && !this.bucket.domain) {
                 this.$Message.warning({
                     content: '请先设置又拍云的加速域名.您可以在又拍云控制台查看您的加速域名',

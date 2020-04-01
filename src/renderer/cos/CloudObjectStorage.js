@@ -94,6 +94,22 @@ export default class CloudObjectStorage {
 
     /**
      * 获取已授权的cos列表
+     * @param 
+     */
+    async getAccesstoken() {
+        return await storagePromise.get('accessToken');
+    }
+
+     /**
+     * 获取已授权的cos列表
+     * @param 
+     */
+    async setAccesstoken(access_key) {
+        console.log(access_key)
+        await storagePromise.set('accessToken', access_key);
+    }
+    /**
+     * 获取已授权的cos列表
      * @param callback
      * @returns {Promise<void>}
      */

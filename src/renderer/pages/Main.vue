@@ -17,7 +17,7 @@
               <template v-if="menuState">
                 <Icon
                   :size="item.size ? item.icon : 25"
-                  :type="item.permission === 1 ? 'md-lock' : (bucketName === item.name ? 'md-folder-open' : 'md-folder')"
+                  :type="bucketName === item.name ? 'md-folder-open' : 'md-folder'"
                 ></Icon>
                 <span class="layout-text">{{item.name}}</span>
               </template>
@@ -38,6 +38,7 @@
             </Menu-item>
           </Menu-group>
         </Menu>
+         <Button type="primary" to="/netdisk">Gomk企业网盘</Button>
         <div class="version">
           <span @click="openBrowser(version.github)">v{{appVersion}}</span>
           <Poptip trigger="hover" v-if="version.url" placement="top-start" :title="version.version">

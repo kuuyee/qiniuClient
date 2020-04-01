@@ -219,6 +219,9 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+import * as types from "../vuex/mutation-types";
+import * as storagePromise from '../service/storagePromise';
 import { login, initCaptcha, drawCodeImage } from "../api/index";
 import { validateMobile } from "../libs/validate";
 import { Constants, mixins, util } from "../service";
@@ -235,8 +238,8 @@ export default {
       tabName: "username",
       loading: false,
       form: {
-        username: "请输入员工编号",
-        password: "",
+        username: "test",
+        password: "123456",
         mobile: "阿里云短信0.045/条 若余额不足联系作者充值",
         code: ""
       },
@@ -314,6 +317,7 @@ export default {
     this.getCaptchaImg(); //默认初始化加载验证码
   },
   methods: {
+     ...mapActions([types.app.access_token]),
     //获取验证码图片
     getCaptchaImg() {
       this.loadingCaptcha = true;
@@ -343,6 +347,8 @@ export default {
             }).then(res => {
               if (res.success) {
                 //this.afterLogin(res);
+                this[types.app.access_token](res.result);
+                this.$storage.setAccesstoken(res.result)
                 this.$router.push({
                   name: Constants.PageName.netdisk,
                 });

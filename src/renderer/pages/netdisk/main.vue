@@ -3,13 +3,13 @@
     <div class="content">
       <div class="layout-menu">
         <i-button type="text" class="navicon_btn">
-          <Icon @click="toggleMenu" class="icon iconfont" :class="'icon-' + cos.key" size="20"></Icon>
-          <span @click="showChangeAlias">{{menuState ? cos.name : ''}}</span>
+          <Icon @click="toggleMenu" class="icon iconfont icon-minio" size="20"></Icon>
+          <span @click="showChangeAlias">{{menuState ? '企业网盘' : ''}}</span>
         </i-button>
         <Menu ref="menu" width="auto" @on-select="onMenuSelect" :active-name="bucketName">
           <Menu-group class="buckets-menu" title="存储空间">
             <Menu-item
-              v-for="(item,index) of buckets_info"
+              v-for="(item,index) of netdisk_top_dir"
               :key="index"
               :name="item.name"
               :index="index"
@@ -17,7 +17,7 @@
               <template v-if="menuState">
                 <Icon
                   :size="item.size ? item.icon : 25"
-                  :type="item.permission === 1 ? 'md-lock' : (bucketName === item.name ? 'md-folder-open' : 'md-folder')"
+                  :type="bucketName === item.name ? 'md-folder-open' : 'md-folder'"
                 ></Icon>
                 <span class="layout-text">{{item.name}}</span>
               </template>
@@ -36,8 +36,10 @@
               <Icon :size="item.size ? item.icon : 25" :type="item.icon"></Icon>
               <span class="layout-text" v-if="menuState">{{item.title}}</span>
             </Menu-item>
+            <MenuItem name="netdisk" to="/main/bucketPage">minio</MenuItem>
           </Menu-group>
         </Menu>
+
         <div class="version">
           <span @click="openBrowser(version.github)">v{{appVersion}}</span>
           <Poptip trigger="hover" v-if="version.url" placement="top-start" :title="version.version">
@@ -126,6 +128,7 @@
   </div>
 </template>
 <script>
+import { getNetdiskAllDir } from "../../api/netdisk";
 import { mapGetters, mapActions } from "vuex";
 import * as types from "../../vuex/mutation-types";
 import pkg from "../../../../package.json";
@@ -138,6 +141,8 @@ export default {
   components: { StatusView },
   data() {
     return {
+      netdisk_top_dir: [],
+      accesss_key: "",
       coses: [], //已登录的cos列表
       cos: { name: "" },
       cosChoiceModel: false,
@@ -188,7 +193,8 @@ export default {
   computed: {
     ...mapGetters({
       buckets_info: types.app.buckets_info,
-      recent: types.setup.recent
+      recent: types.setup.recent,
+      access_token: types.app.access_token
     })
   },
   /**
@@ -213,14 +219,26 @@ export default {
 
     let cos = this.$route.params.cos;
     console.log("进入主页");
+
     console.log(cos);
     if (cos) {
       this.selectCOS(cos);
     } else {
+      console.log("init");
       //this.initCOS();
     }
   },
   methods: {
+    init() {
+      console.log("init");
+      this.getNetdiskTopDir();
+    },
+    getNetdiskTopDir() {
+      getNetdiskAllDir(this.access_token).then(res => {
+        console.log(res);
+        this.netdisk_top_dir = res.result;
+      });
+    },
     ...mapActions([types.app.a_buckets_info, types.setup.a_recent]),
     initCOS() {
       this.$storage.getBindCoses(({ coses }) => {
@@ -292,6 +310,13 @@ export default {
         }
       });
     },
+    getNetdiskFolder() {
+      this.onMenuSelect(this[types.app.buckets_info][defaultIndex].name);
+      this.$nextTick(() => {
+        // COS切换后,menu没有active样式,手动调用一下
+        this.$refs["menu"].updateActiveName();
+      });
+    },
     checkVersion() {
       this.doRequset(Constants.URL.releases, null, result => {
         if (result.tag_name > pkg.version) {
@@ -312,6 +337,7 @@ export default {
       this.menuState = !this.menuState;
     },
     onMenuSelect(name) {
+      console.log(name);
       switch (name) {
         default:
           this.bucketName = name;
@@ -320,7 +346,7 @@ export default {
             bucket: name
           });
           this.$router.push({
-            name: Constants.PageName.bucketPage,
+            name: Constants.PageName.netdisk_enterprise,
             query: { bucketName: name }
           });
           break;
@@ -367,8 +393,22 @@ export default {
         case Constants.Key.app_setup:
           this.$router.push({ name: Constants.PageName.setup });
           break;
+        case "netdisk":
+          this.bucketName = name;
+          this[types.setup.a_recent]({
+            uuid: this.cos.uuid,
+            bucket: name
+          });
+          this.$router.push({
+            name: Constants.PageName.bucketPage,
+            query: { bucketName: name }
+          });
+          break;
       }
     }
+  },
+  mounted() {
+    this.init();
   }
 };
 </script>

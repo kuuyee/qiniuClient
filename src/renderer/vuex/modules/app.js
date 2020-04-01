@@ -10,6 +10,7 @@ export default {
             buckets_info: [],       //bucket对象列表
             //计划中...
             datas: [],              //TODO: 上传/下载日志列表
+            access_token:'',
         }
 
     },
@@ -30,6 +31,9 @@ export default {
         [types.app.datas](state, value) {
             state.app.datas = value;
         },
+        [types.app.access_token](state, value) {
+            state.app.access_token = value;
+        },
     },
     actions: {
         [types.app.a_buckets_info](context, value) {
@@ -44,6 +48,9 @@ export default {
         [types.app.a_datas](context, value) {
             context.commit(types.app.datas, value);
         },
+        [types.app.access_token](context, value) {
+            context.commit(types.app.access_token, value);
+        },
     },
     getters: {
         [types.app.buckets_info](state) {
@@ -54,6 +61,9 @@ export default {
         },
         [types.app.datas](state) {
             return state.app.datas;
+        },
+        [types.app.access_token](state) {
+            return state.app.access_token;
         },
     }
 };

@@ -21,7 +21,19 @@ export default [
     {
         path: '/' + Constants.PageName.netdisk,
         name: Constants.PageName.netdisk,
-        components: require('@/pages/netdisk/main.vue')
+        components: require('@/pages/netdisk/main.vue'),
+        children: [
+            {
+                path: Constants.PageName.netdisk_enterprise,
+                name: Constants.PageName.netdisk_enterprise,
+                components: require('@/pages/netdisk/enterprise.vue')
+            },
+            {
+                path: Constants.PageName.netdisk_personal,
+                name: Constants.PageName.netdisk_personal,
+                components: require('@/pages/netdisk/personal.vue')
+            }
+        ]
     },
     {
         path: '/' + Constants.PageName.login,
