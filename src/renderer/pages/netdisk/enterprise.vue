@@ -627,6 +627,28 @@ export default {
         }
       }
     },
+    // 删除单个文件
+    remove(v) {
+      this.$Modal.confirm({
+        title: "确认删除",
+        content: "您确认要删除文件 " + v.name + " ?",
+        loading: true,
+        onOk: () => {
+          //deleteFile(v.id).then(res => {
+          deleteNetdiskFile(v.id).then(res => {
+            this.$Modal.remove();
+            if (res.success) {
+              this.$Message.success("删除文件 " + v.name + " 成功");
+              EventBus.$emit(Constants.Event.refreshNetdiskTree);
+              //this.getDataList();
+              if (v.parentId) {
+                this.getNetdiskList(v.parentId);
+              }
+            }
+          });
+        }
+      });
+    },
 
     /**
      * 初始化空间信息
