@@ -1,0 +1,172 @@
+.user-disk-info-title{
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.user-disk-info-footer{
+    color:#9ea7b4;
+    font-size: 12px;
+}
+
+//自定义进度条样式，宽度显示成100%
+&.ivu-progress-show-info .ivu-progress-outer {
+    padding-right: 45px;
+}
+.ivu-progress-text {
+    margin-left: 15px;
+}
+//自定义分割线上下间距
+.ivu-divider-horizontal {
+    margin:14px 0;
+}
+
+.search {
+    .oss-operation {
+        margin-bottom: 2vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        button {
+            margin-right: 5px;
+        }
+    }
+}
+
+.oss-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.oss-card {
+    margin: 10px 20px 10px 0;
+    height: 100px;
+
+    :hover {
+        .content .other .name {
+            color: #1890ff;
+            transition: color .3s;
+        }
+    }
+
+    cursor: pointer;
+
+    .ivu-card-body {
+        padding: 0;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+
+        :hover {
+            .play {
+                transition: opacity .3s;
+                opacity: 1 !important;
+            }
+        }
+
+        .img {
+            height: 135px;
+            object-fit: cover;
+        }
+
+        .video {
+            height: 135px;
+            position: relative;
+
+            .cover {
+                height: 100%;
+                width: 100%;
+                object-fit: fill;
+            }
+
+            .play {
+                position: absolute;
+                top: 43px;
+                left: 117px;
+                height: 50px;
+                width: 50px;
+                opacity: 0.8;
+            }
+        }
+
+        .other {
+            padding: 16px;
+            height: 135px;
+
+            .name {
+                font-size: 12px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                color: rgba(0, 0, 0, .85);
+                font-weight: 500;
+                margin-bottom: 4px;
+            }
+
+            .key {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 45px;
+                word-break: break-all;
+                color: rgba(0, 0, 0, .45);
+            }
+
+            .info {
+                font-size: 12px;
+                color: rgba(0, 0, 0, .45);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 36px;
+                word-break: break-all;
+            }
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            height: 24px;
+            background: #f7f9fa;
+            border-top: 1px solid #e8e8e8;
+
+            i:hover {
+                color: #1890ff;
+            }
+
+            .btn {
+                display: flex;
+                justify-content: center;
+                width: 25%;
+                border-right: 1px solid #e8e8e8;
+            }
+
+            .btn-no {
+                display: flex;
+                justify-content: center;
+                width: 25%;
+            }
+        }
+    }
+}
+
+.gomk-svg-icon{
+    color:#2d8cf0;
+    font-size: 24px;
+}
+
+.file-type-icon {
+    width: 24px;
+    vertical-align: sub;
+  }
+
+  .file-type-image-thumb {
+    height: 72px;
+    vertical-align: sub;
+  }
+  .file-type-icon-thumb {
+    height: 52px;
+    vertical-align: sub;
+  }

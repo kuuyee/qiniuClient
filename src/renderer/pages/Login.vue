@@ -221,8 +221,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import * as types from "../vuex/mutation-types";
-import * as storagePromise from '../service/storagePromise';
-import { login, initCaptcha, drawCodeImage } from "../api/index";
+import * as storagePromise from "../service/storagePromise";
+import { login, initCaptcha, drawCodeImage, userInfo } from "../api/index";
 import { validateMobile } from "../libs/validate";
 import { Constants, mixins, util } from "../service";
 import brand from "@/cos/brand";
@@ -317,7 +317,11 @@ export default {
     this.getCaptchaImg(); //默认初始化加载验证码
   },
   methods: {
-     ...mapActions([types.app.access_token]),
+    ...mapActions([
+      types.app.access_token,
+      types.app.user_roles,
+      types.app.user_info
+    ]),
     //获取验证码图片
     getCaptchaImg() {
       this.loadingCaptcha = true;
@@ -348,10 +352,8 @@ export default {
               if (res.success) {
                 //this.afterLogin(res);
                 this[types.app.access_token](res.result);
-                this.$storage.setAccesstoken(res.result)
-                this.$router.push({
-                  name: Constants.PageName.netdisk,
-                });
+                this.$storage.setAccesstoken(res.result);
+                this.afterLogin(res);
               } else {
                 this.loading = false;
                 this.getCaptchaImg();
@@ -382,7 +384,33 @@ export default {
         });
       }
     },
+    //登录成功之后的处理
+    afterLogin(res) {
+      let accessToken = res.result;
+      // 获取用户信息
+      userInfo(accessToken).then(res => {
+        if (res.success) {
+          console.log(res);
+          // 避免超过大小限制
+          delete res.result.permissions;
+          let roles = [];
+          res.result.roles.forEach(e => {
+            roles.push(e.name);
+          });
 
+          this[types.app.user_roles](roles);
+          this[types.app.user_info](JSON.stringify(res.result));
+
+          //this.$store.commit("setAvatarPath", res.result.avatar);
+          // 加载菜单
+          this.$router.push({
+            name: Constants.PageName.netdisk
+          });
+        } else {
+          this.loading = false;
+        }
+      });
+    },
     onTabClick(key) {
       if (key !== "已登录") {
         this.selectBrand = this.brands[key];

@@ -68,5 +68,7 @@ export const app = {
     datas: 'datas',
     a_datas: 'a_datas',
 
-    access_token:'access_token',
+    access_token: 'access_token',
+    user_info: 'user_info',
+    user_roles: 'user_roles',
 };

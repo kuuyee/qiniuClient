@@ -18,8 +18,8 @@ export const login = (params) => {
     return postRequest('/login', null, params)
 }
 // 获取用户登录信息
-export const userInfo = (params) => {
-    return getRequest('/user/info', params)
+export const userInfo = (accessToken, params) => {
+    return getRequest('/user/info', accessToken, params)
 }
 // 注册
 export const regist = (params) => {

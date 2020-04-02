@@ -10,7 +10,7 @@ import PasteImageService from "../service/pasteImageService";
 const pasteImageService = new PasteImageService();
 
 export const router = new VueRouter({
-  mode: 'history',
+  //mode: 'history',
   //base: process.env.BASE_URL,
   scrollBehavior: () => ({ y: 0 }),
   routes

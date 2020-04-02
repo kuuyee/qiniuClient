@@ -220,7 +220,6 @@ export default {
     let cos = this.$route.params.cos;
     console.log("进入主页");
 
-    console.log(cos);
     if (cos) {
       this.selectCOS(cos);
     } else {
@@ -232,6 +231,8 @@ export default {
     init() {
       console.log("init");
       this.getNetdiskTopDir();
+      //this.$router.push({ path: Constants.PageName.netdisk_enterprise });
+      this.onMenuSelect(Constants.PageName.netdisk_enterprise);
     },
     getNetdiskTopDir() {
       getNetdiskAllDir(this.access_token).then(res => {

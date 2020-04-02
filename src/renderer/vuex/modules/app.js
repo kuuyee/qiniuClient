@@ -11,6 +11,8 @@ export default {
             //计划中...
             datas: [],              //TODO: 上传/下载日志列表
             access_token:'',
+            user_info:{},
+            user_roles:[],
         }
 
     },
@@ -34,6 +36,12 @@ export default {
         [types.app.access_token](state, value) {
             state.app.access_token = value;
         },
+        [types.app.user_info](state, value) {
+            state.app.user_info = value;
+        },
+        [types.app.user_roles](state, value) {
+            state.app.user_roles = value;
+        },
     },
     actions: {
         [types.app.a_buckets_info](context, value) {
@@ -51,6 +59,12 @@ export default {
         [types.app.access_token](context, value) {
             context.commit(types.app.access_token, value);
         },
+        [types.app.user_info](context, value) {
+            context.commit(types.app.user_info, value);
+        },
+        [types.app.user_roles](context, value) {
+            context.commit(types.app.user_roles, value);
+        },
     },
     getters: {
         [types.app.buckets_info](state) {
@@ -64,6 +78,12 @@ export default {
         },
         [types.app.access_token](state) {
             return state.app.access_token;
+        },
+        [types.app.user_info](state) {
+            return state.app.user_info;
+        },
+        [types.app.user_roles](state) {
+            return state.app.user_roles;
         },
     }
 };

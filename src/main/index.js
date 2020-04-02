@@ -53,8 +53,8 @@ function initApp() {
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        height: 750,
-        width: 1000,
+        height: 1100,
+        width: 1500,
         title: pkg.cnname,
         titleBarStyle: 'hidden',
         icon: path.join(__dirname, '../../build/icons/icon.' + (util.isWin() ? 'ico' : 'png')),
