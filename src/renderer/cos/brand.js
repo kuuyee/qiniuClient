@@ -33,5 +33,9 @@ export default {
     minio: {
         key: 'minio',
         name: 'MinIO'
+    },
+    gomk: {
+        key: 'gomk',
+        name: 'GoMK'
     }
 };

@@ -7,6 +7,8 @@ export const Key = {
     app_switch: '__app__switch__',
     app_logout: '__app__logout__',
     configuration: 'configuration',
+    menu_enterprise: '企业网盘',
+    menu_personal: '个人网盘',
 };
 
 export const PageName = {
@@ -17,8 +19,8 @@ export const PageName = {
     bucketPage: 'bucketPage',
     setup: 'setup',
     netdisk: 'netdisk',
-    netdisk_enterprise:"netdisk-enterprise",
-    netdisk_personal:"netdisk-personal",
+    netdisk_enterprise: "netdisk-enterprise",
+    netdisk_personal: "netdisk-personal",
 };
 
 export const URL = {

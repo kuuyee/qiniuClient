@@ -115,6 +115,7 @@ export default class CloudObjectStorage {
      */
     async getBindCoses(callback) {
         let cos_keys = await storagePromise.get(KEY_COS);
+        console.log(cos_keys)
         // 兼容之前的配置写法
         if (Object.keys(cos_keys).length === 0) {
             cos_keys = [];
@@ -125,6 +126,7 @@ export default class CloudObjectStorage {
                     cos_keys.push(Object.assign(data, brand[item]));
                 }
             }
+            console.log(cos_keys);
             await storagePromise.set(KEY_COS, cos_keys);
         }
         callback({coses: cos_keys});

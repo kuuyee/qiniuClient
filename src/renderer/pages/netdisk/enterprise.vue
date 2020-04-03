@@ -267,8 +267,9 @@
       </Row>
     </Card>
     <!--<resource-table v-if="showType === 0" :bucket="bucket" ></resource-table>-->
-
+    <!--
     <resource-filter ref="resource-filter" :bucket="bucket"></resource-filter>
+    -->
 
     <Modal
       v-model="modelDeleteAsk"
@@ -286,7 +287,7 @@
   </div>
 </template>
 <script>
-import { getNetdiskListData } from "../../api/netdisk";
+import { getNetdiskListData, downloadNetdiskFile } from "../../api/netdisk";
 import Header from "./header.vue";
 import ResourceGrid from "@/components/ResourceGrid.vue";
 import ResourceFilter from "@/components/ResourceFilter";
@@ -321,6 +322,11 @@ export default {
       folderPath: null,
       modelDeleteAsk: false,
 
+      selectFolder: {
+        name: "企业网盘",
+        id: 1,
+        fullPath: [{ id: "1", name: "企业网盘" }]
+      },
       searchForm: {
         // 搜索框对应data对象
         name: "",
@@ -386,6 +392,22 @@ export default {
       pageSizeOpts: [5, 10, 20]
     };
   },
+  filters: {
+    ellipsis(value) {
+      if (!value) return "";
+      if (value.length > 3) {
+        return value.slice(0, 3) + "...";
+      }
+      return value;
+    },
+    filterType(val) {
+      if (val === 0) return "0 B";
+      let k = 1024;
+      let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+        i = Math.floor(Math.log(val) / Math.log(k));
+      return (val / Math.pow(k, i)).toPrecision(3) + " " + sizes[i];
+    }
+  },
   computed: {
     isAdmin() {
       return this.user_roles.includes("ROLE_ADMIN");
@@ -434,7 +456,9 @@ export default {
   watch: {
     bucketName: function(val, oldVal) {
       if (val && oldVal !== val) {
-        this.initBucket(val);
+        console.log("走这里？？？");
+        console.log(val);
+        //this.initBucket(val);
       }
     }
   },
@@ -533,7 +557,7 @@ export default {
           this.addFolderParentName = data.dirInfo.name;
           this.addFolderParentLevel = data.dirInfo.level;
           this.nowScope = data.dirInfo.scope;
-          this.getNetdiskList(fid); //获取点击目录下的内容列表
+          this.getNetdiskList(fid, this.access_token); //获取点击目录下的内容列表
           EventBus.$emit(Constants.Event.expandNetdiskSubTree, fid);
           this.$store.commit("setSelectFolderOnwer", data.dirInfo.createUid);
           //EventBus.$emit(Constants.Event.netDiskFolderOnwer, fid);
@@ -566,13 +590,13 @@ export default {
     changePage(v) {
       this.searchForm.pageNumber = v;
       //this.getDataList();
-      this.getNetdiskList(this.selectFolder.id);
+      this.getNetdiskList(this.selectFolder.id, this.access_token);
       this.clearSelectAll();
     },
     changePageSize(v) {
       this.searchForm.pageSize = v;
       //this.getDataList();
-      this.getNetdiskList(this.selectFolder.id);
+      this.getNetdiskList(this.selectFolder.id, this.access_token);
     },
     clearSelectAll() {
       this.$refs.table.selectAll(false);
@@ -584,7 +608,7 @@ export default {
       if (e.order == "normal") {
         this.searchForm.order = "";
       }
-      this.getNetdiskList(this.selectFolder.id);
+      this.getNetdiskList(this.selectFolder.id, this.access_token);
       //this.getDataList();
     },
     changeSelect(e) {
@@ -627,6 +651,21 @@ export default {
         }
       }
     },
+    // 文件下载
+    download(fid) {
+      downloadNetdiskFile(fid, this.access_token).then(res => {
+        if (res.success) {
+          console.log(res);
+          window.open(res.result);
+        } else {
+          this.$Message.warning({
+            content: "无权限查看，因为您不是此部门的成员！",
+            duration: 3,
+            closable: true
+          });
+        }
+      });
+    },
     // 删除单个文件
     remove(v) {
       this.$Modal.confirm({
@@ -664,6 +703,7 @@ export default {
      * 获取指定前缀文件列表
      */
     getResources(option) {
+      console.log("进入企业getResources");
       this.bucket.getResources(option);
     },
     /**

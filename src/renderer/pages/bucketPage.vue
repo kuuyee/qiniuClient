@@ -279,6 +279,7 @@
                 }
             },
             downloads() {
+                //console.log(this.bucket.selection);
                 EventBus.$emit(Constants.Event.resourceAction, this.bucket.selection, Constants.ActionType.download);
                 this.bucket.selection = [];
             },

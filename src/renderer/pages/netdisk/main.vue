@@ -135,6 +135,7 @@ import pkg from "../../../../package.json";
 import StatusView from "@/components/StatusView";
 
 import { Constants, mixins, EventBus, util } from "../../service/index";
+import { Content } from 'view-design';
 
 export default {
   mixins: [mixins.base, mixins.request],
@@ -203,6 +204,7 @@ export default {
    * 初始化COSkey
    */
   created: function() {
+    console.log("进入main");
     this.checkVersion();
 
     EventBus.$on(Constants.Event.dropView, option => {
@@ -341,6 +343,8 @@ export default {
       console.log(name);
       switch (name) {
         default:
+          console.log("走这里？9");
+          console.log(name);
           this.bucketName = name;
           this[types.setup.a_recent]({
             uuid: this.cos.uuid,
@@ -394,15 +398,18 @@ export default {
         case Constants.Key.app_setup:
           this.$router.push({ name: Constants.PageName.setup });
           break;
-        case "netdisk":
+        case Constants.Key.menu_enterprise:
+          console.log("走这里？A");
+          console.log(name);
           this.bucketName = name;
           this[types.setup.a_recent]({
             uuid: this.cos.uuid,
             bucket: name
           });
+          console.log("断点");
           this.$router.push({
-            name: Constants.PageName.bucketPage,
-            query: { bucketName: name }
+            name: Constants.PageName.netdisk_enterprise,
+            query: { bucketName: Constants.PageName.netdisk_enterprise }
           });
           break;
       }

@@ -58,6 +58,7 @@ export default {
             this.$Message.info('文件路径已复制到剪贴板');
         },
         resourceAction(files, action) {
+            console.log(files);
             files = Array.isArray(files) ? files : [files];
 
             switch (action) {
@@ -67,6 +68,7 @@ export default {
                         item.__action = action;
                         return item;
                     }));
+                    console.log(this.bucket.fileQueue);
                     if (!isTaskPending) {
                         this.status_total = this.bucket.fileQueue.length;
                         this.status_count = 0;

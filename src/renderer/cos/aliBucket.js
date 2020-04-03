@@ -17,7 +17,7 @@ class Bucket extends baseBucket {
      */
     bindPage(vm) {
         this.vm = vm;
-
+        console.log(this.vm.buckets_info);
         this.vm.buckets_info.forEach((item) => {
             if (item.name === this.name) {
                 this.location = item.location;
